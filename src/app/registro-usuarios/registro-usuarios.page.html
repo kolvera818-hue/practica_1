@@ -1,0 +1,116 @@
+
+<ion-content class="registro-content">
+
+  <div class="registro-container">
+
+    <div class="logo">
+      <ion-icon name="person-outline"></ion-icon>
+    </div>
+
+    <h1>Crear cuenta</h1>
+
+    <p class="subtitulo">
+      Regístrate para acceder al sistema
+    </p>
+
+    <form (ngSubmit)="registrar()" class="formulario">
+
+      <label>Nombre completo</label>
+      <ion-item lines="none" class="campo">
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-input
+          name="nombre"
+          [(ngModel)]="usuario.nombre"
+          placeholder="Ingresa tu nombre completo">
+        </ion-input>
+      </ion-item>
+
+      <label>Nombre de usuario</label>
+      <ion-item lines="none" class="campo">
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-input
+          name="username"
+          [(ngModel)]="usuario.username"
+          placeholder="Elige un nombre de usuario">
+        </ion-input>
+      </ion-item>
+
+      <label>Correo electrónico</label>
+      <ion-item lines="none" class="campo">
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-input
+          name="correo"
+          type="email"
+          [(ngModel)]="usuario.correo"
+          placeholder="ejemplo@correo.com">
+        </ion-input>
+      </ion-item>
+
+      <label>Contraseña</label>
+      <ion-item lines="none" class="campo">
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-input
+          name="password"
+          [type]="mostrarPassword ? 'text' : 'password'"
+          [(ngModel)]="usuario.password"
+          placeholder="Mínimo 8 caracteres">
+        </ion-input>
+
+        <ion-button
+          type="button"
+          fill="clear"
+          slot="end"
+          (click)="mostrarPassword = !mostrarPassword">
+          <ion-icon
+            [name]="mostrarPassword ? 'eye-off-outline' : 'eye-outline'">
+          </ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <label>Confirmar contraseña</label>
+      <ion-item lines="none" class="campo">
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-input
+          name="confirmarPassword"
+          [type]="mostrarConfirmacion ? 'text' : 'password'"
+          [(ngModel)]="usuario.confirmarPassword"
+          placeholder="Repite tu contraseña">
+        </ion-input>
+
+        <ion-button
+          type="button"
+          fill="clear"
+          slot="end"
+          (click)="mostrarConfirmacion = !mostrarConfirmacion">
+          <ion-icon
+            [name]="mostrarConfirmacion ? 'eye-off-outline' : 'eye-outline'">
+          </ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <p class="error" *ngIf="error">
+        {{ error }}
+      </p>
+
+      <p class="exito" *ngIf="exito">
+        {{ exito }}
+      </p>
+
+      <ion-button
+        type="submit"
+        expand="block"
+        class="btn-registro"
+        [disabled]="cargando">
+        {{ cargando ? 'Registrando...' : 'Crear cuenta' }}
+      </ion-button>
+
+    </form>
+
+    <div class="login">
+      ¿Ya tienes una cuenta?
+      <a (click)="volverLogin()">Iniciar sesión</a>
+    </div>
+
+  </div>
+
+</ion-content>

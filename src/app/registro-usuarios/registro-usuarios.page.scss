@@ -1,0 +1,106 @@
+
+.registro-content {
+  --background: #101c36;
+}
+
+.registro-container {
+  width: 90%;
+  max-width: 420px;
+  margin: auto;
+  padding: 35px 0 50px;
+}
+
+.logo {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 18px;
+  background: #3974e8;
+  border-radius: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 10px 30px rgba(57, 116, 232, 0.3);
+}
+
+.logo ion-icon {
+  color: white;
+  font-size: 35px;
+}
+
+h1 {
+  color: white;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.subtitulo {
+  text-align: center;
+  color: #b8c8e4;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+.formulario label {
+  display: block;
+  color: #e0e8f8;
+  font-size: 14px;
+  margin-bottom: 9px;
+}
+
+.campo {
+  --background: #233350;
+  --color: white;
+  --border-radius: 12px;
+  --padding-start: 15px;
+
+  margin-bottom: 20px;
+}
+
+.campo ion-icon {
+  color: #a5b7d5;
+  font-size: 20px;
+}
+
+.campo ion-input {
+  --color: white;
+  --placeholder-color: #a5b7d5;
+}
+
+.btn-registro {
+  --background: #3974e8;
+  --color: white;
+  --border-radius: 12px;
+
+  height: 52px;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.error {
+  color: #ff7b87;
+  font-size: 13px;
+  text-align: center;
+}
+
+.exito {
+  color: #65e6aa;
+  font-size: 13px;
+  text-align: center;
+}
+
+.login {
+  text-align: center;
+  color: #b8c8e4;
+  font-size: 14px;
+  margin-top: 25px;
+}
+
+.login a {
+  color: #87b8ff;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 5px;
+}

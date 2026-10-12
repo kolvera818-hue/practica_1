@@ -1,0 +1,123 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Gestión de Alumnos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-list>
+
+    <!-- MATRÍCULA -->
+    <ion-item>
+      <ion-input
+        label="Matrícula *"
+        labelPlacement="floating"
+        [(ngModel)]="alumnos.n_control"
+        type="text">
+      </ion-input>
+    </ion-item>
+
+    <!-- NOMBRE -->
+    <ion-item>
+      <ion-input
+        label="Nombre *"
+        labelPlacement="floating"
+        [(ngModel)]="alumnos.nombre"
+        type="text">
+      </ion-input>
+    </ion-item>
+
+    <!-- SEGUNDO NOMBRE -->
+    <ion-item>
+      <ion-input
+        label="Segundo nombre"
+        labelPlacement="floating"
+        [(ngModel)]="alumnos.s_nombre"
+        type="text">
+      </ion-input>
+    </ion-item>
+
+    <!-- APELLIDO PATERNO -->
+    <ion-item>
+      <ion-input
+        label="Apellido paterno *"
+        labelPlacement="floating"
+        [(ngModel)]="alumnos.apat"
+        type="text">
+      </ion-input>
+    </ion-item>
+
+    <!-- APELLIDO MATERNO -->
+    <ion-item>
+      <ion-input
+        label="Apellido materno *"
+        labelPlacement="floating"
+        [(ngModel)]="alumnos.amat"
+        type="text">
+      </ion-input>
+    </ion-item>
+
+    <!-- FECHA DE NACIMIENTO -->
+    <ion-item>
+      <ion-input
+        label="Fecha de nacimiento *"
+        labelPlacement="stacked"
+        [(ngModel)]="alumnos.fecha_nac"
+        type="date">
+      </ion-input>
+    </ion-item>
+
+    <!-- GÉNERO -->
+    <ion-item>
+      <ion-select
+        label="Género *"
+        labelPlacement="floating"
+        [(ngModel)]="alumnos.genero">
+
+        <ion-select-option value="M">
+          Masculino
+        </ion-select-option>
+
+        <ion-select-option value="F">
+          Femenino
+        </ion-select-option>
+
+      </ion-select>
+    </ion-item>
+
+    <!-- CARRERA -->
+    <ion-item>
+      <ion-select
+        label="Carrera *"
+        labelPlacement="floating"
+        [(ngModel)]="alumnos.fk_carrera">
+
+        <ion-select-option
+          *ngFor="let carrera of listaCarreras"
+          [value]="carrera.id">
+
+          {{ carrera.nombre }}
+
+        </ion-select-option>
+
+      </ion-select>
+    </ion-item>
+
+  </ion-list>
+
+  <!-- GUARDAR -->
+  <ion-button
+    expand="block"
+    (click)="validarGuardar()">
+    Guardar
+  </ion-button>
+
+  <!-- REGRESAR -->
+  <ion-button
+    expand="block"
+    href="/home">
+    Regresar a Home
+  </ion-button>
+
+</ion-content>

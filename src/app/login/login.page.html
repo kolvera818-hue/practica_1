@@ -1,0 +1,85 @@
+
+<ion-content class="login-content">
+
+  <div class="login-container">
+
+    <div class="logo">
+      <ion-icon name="lock-closed-outline"></ion-icon>
+    </div>
+
+    <h1>Bienvenido</h1>
+    <p class="subtitulo">
+      Inicia sesión para acceder al sistema
+    </p>
+
+    <div class="formulario">
+
+      <label>Correo o nombre de usuario</label>
+      <ion-item lines="none" class="campo">
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-input
+          [(ngModel)]="usuario"
+          placeholder="Ingresa tu correo o usuario"
+          autocomplete="username">
+        </ion-input>
+      </ion-item>
+
+      <p class="error" *ngIf="errorUsuario">
+        {{ errorUsuario }}
+      </p>
+
+      <label>Contraseña</label>
+      <ion-item lines="none" class="campo">
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-input
+          [(ngModel)]="password"
+          [type]="mostrarPassword ? 'text' : 'password'"
+          placeholder="Ingresa tu contraseña"
+          autocomplete="current-password">
+        </ion-input>
+
+        <ion-button
+          fill="clear"
+          slot="end"
+          (click)="mostrarOcultarPassword()">
+          <ion-icon
+            [name]="mostrarPassword ? 'eye-off-outline' : 'eye-outline'">
+          </ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <p class="error" *ngIf="errorPassword">
+        {{ errorPassword }}
+      </p>
+
+      <div class="opciones">
+        <ion-checkbox [(ngModel)]="recordar">
+          Recordarme
+        </ion-checkbox>
+
+        <a (click)="recuperarPassword()">
+          ¿Olvidaste tu contraseña?
+        </a>
+      </div>
+
+      <p class="mensaje" *ngIf="mensaje">
+        {{ mensaje }}
+      </p>
+
+      <ion-button
+        expand="block"
+        class="btn-login"
+        (click)="iniciarSesion()">
+        Iniciar sesión
+      </ion-button>
+
+      <div class="registro">
+        ¿No tienes una cuenta?
+        <a (click)="irRegistro()">Crear cuenta</a>
+      </div>
+
+    </div>
+
+  </div>
+
+</ion-content>

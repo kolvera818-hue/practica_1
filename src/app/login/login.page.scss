@@ -1,0 +1,133 @@
+
+.login-content {
+  --background: #101c36;
+}
+
+.login-container {
+  width: 90%;
+  max-width: 420px;
+  min-height: 100%;
+  margin: auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 35px 0;
+}
+
+.logo {
+  width: 76px;
+  height: 76px;
+  background: #3974e8;
+  border-radius: 22px;
+  margin: 0 auto 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 0 10px 30px rgba(57, 116, 232, 0.3);
+}
+
+.logo ion-icon {
+  font-size: 38px;
+  color: white;
+}
+
+h1 {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.subtitulo {
+  text-align: center;
+  color: #b8c8e4;
+  font-size: 14px;
+  margin-bottom: 35px;
+}
+
+.formulario label {
+  display: block;
+  color: #e0e8f8;
+  font-size: 14px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.campo {
+  --background: #233350;
+  --color: white;
+  --border-radius: 12px;
+  --padding-start: 15px;
+
+  margin-bottom: 18px;
+}
+
+.campo ion-icon {
+  color: #a5b7d5;
+  font-size: 20px;
+}
+
+.campo ion-input {
+  --color: white;
+  --placeholder-color: #a5b7d5;
+}
+
+.opciones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0 25px;
+}
+
+.opciones ion-checkbox {
+  --size: 17px;
+  --checkbox-background: transparent;
+  color: #b8c8e4;
+  font-size: 12px;
+}
+
+.opciones a,
+.registro a {
+  color: #87b8ff;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.btn-login {
+  --background: #3974e8;
+  --border-radius: 12px;
+  height: 52px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.registro {
+  text-align: center;
+  margin-top: 25px;
+  color: #b8c8e4;
+  font-size: 14px;
+}
+
+.registro a {
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.error {
+  color: #ff7b87;
+  font-size: 12px;
+  margin: -10px 0 15px;
+}
+
+.mensaje {
+  color: #a8c9ff;
+  text-align: center;
+  font-size: 13px;
+}
