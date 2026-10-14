@@ -2,25 +2,36 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import {
   IonContent,
   IonButton,
-  IonInput,
-  IonItem,
   IonIcon,
-  IonCheckbox
+  IonCheckbox,
+  IonItem,
+  IonInput
 } from '@ionic/angular';
 
 import { addIcons } from 'ionicons';
 import {
-  mailOutline,
   lockClosedOutline,
+  mailOutline,
   eyeOutline,
   eyeOffOutline
 } from 'ionicons/icons';
+
+interface RespuestaLogin {
+  status: string;
+  message: string;
+  usuario?: {
+    id: number;
+    nombre: string;
+    username: string;
+    correo: string;
+  };
+}
 
 @Component({
   selector: 'app-login',
@@ -33,16 +44,17 @@ import {
     HttpClientModule,
     IonContent,
     IonButton,
-    IonInput,
-    IonItem,
     IonIcon,
-    IonCheckbox
+    IonCheckbox,
+    IonItem,
+    IonInput
   ]
 })
 export class LoginPage {
 
   usuario = '';
   password = '';
+
   mostrarPassword = false;
   recordar = false;
   cargando = false;
@@ -55,15 +67,36 @@ export class LoginPage {
     'http://DESKTOP-V83PK5A/api_ionic/login_usuario.php';
 
   constructor(
-    private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {
     addIcons({
-      mailOutline,
       lockClosedOutline,
+      mailOutline,
       eyeOutline,
       eyeOffOutline
     });
+  }
+
+  ionViewWillEnter() {
+    const sesion =
+      localStorage.getItem('usuario') ||
+      sessionStorage.getItem('usuario');
+
+    if (sesion) {
+      try {
+        const datos = JSON.parse(sesion);
+
+        if (datos && datos.id) {
+          this.router.navigate(['/home'], {
+            replaceUrl: true
+          });
+        }
+      } catch {
+        localStorage.removeItem('usuario');
+        sessionStorage.removeItem('usuario');
+      }
+    }
   }
 
   mostrarOcultarPassword() {
@@ -72,76 +105,98 @@ export class LoginPage {
 
   iniciarSesion() {
 
-    if (this.cargando) return;
-
     this.errorUsuario = '';
     this.errorPassword = '';
     this.mensaje = '';
 
-    this.usuario = this.usuario.trim();
+    const identificador = this.usuario.trim();
 
-    if (!this.usuario) {
-      this.errorUsuario = 'Ingresa tu correo o usuario';
+    if (!identificador) {
+      this.errorUsuario =
+        'Ingresa tu correo o nombre de usuario';
     }
 
     if (!this.password) {
-      this.errorPassword = 'Ingresa tu contraseña';
+      this.errorPassword =
+        'Ingresa tu contraseña';
     }
 
     if (this.errorUsuario || this.errorPassword) {
       return;
     }
 
-    if (this.usuario.includes('@')) {
-      const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (
+      identificador.includes('@') &&
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identificador)
+    ) {
+      this.errorUsuario =
+        'Ingresa un correo electrónico válido';
+      return;
+    }
 
-      if (!correoValido.test(this.usuario)) {
-        this.errorUsuario =
-          'Ingresa un correo electrónico válido';
-        return;
-      }
+    if (this.cargando) {
+      return;
     }
 
     this.cargando = true;
 
-    this.http.post<any>(this.apiUrl, {
-      usuario: this.usuario,
-      password: this.password
-    }).subscribe({
+    this.http.post<RespuestaLogin>(
+      this.apiUrl,
+      {
+        usuario: identificador,
+        password: this.password
+      }
+    ).subscribe({
 
-      next: (respuesta: any) => {
+      next: (respuesta: RespuestaLogin) => {
+
         this.cargando = false;
 
-        if (respuesta.status === 'success') {
+        if (
+          respuesta.status === 'success' &&
+          respuesta.usuario
+        ) {
 
-          this.mensaje = 'Inicio de sesión exitoso';
-
-          // Temporal: se reemplazará por una sesión
-          // validada por el servidor.
-          sessionStorage.setItem(
-            'usuario',
-            JSON.stringify(respuesta.usuario)
+          const datos = JSON.stringify(
+            respuesta.usuario
           );
 
-          this.router.navigate(['/home']);
+          localStorage.removeItem('usuario');
+          sessionStorage.removeItem('usuario');
+
+          if (this.recordar) {
+            localStorage.setItem('usuario', datos);
+          } else {
+            sessionStorage.setItem('usuario', datos);
+          }
+
+          this.password = '';
+
+          this.router.navigate(['/home'], {
+            replaceUrl: true
+          });
 
         } else {
           this.mensaje =
+            respuesta.message ||
             'Correo electrónico o contraseña incorrectos';
         }
       },
 
-      error: (err: any) => {
-        this.cargando = false;
-        console.error('Error de login:', err);
+      error: (error: any) => {
 
-        if (err.status === 401) {
+        this.cargando = false;
+
+        if (error.status === 401) {
           this.mensaje =
             'Correo electrónico o contraseña incorrectos';
         } else {
           this.mensaje =
+            error.error?.message ||
             'Ocurrió un error de conexión. Inténtalo nuevamente';
         }
+
+        console.error('Error de login:', error);
       }
 
     });
@@ -151,8 +206,13 @@ export class LoginPage {
     this.router.navigate(['/registro-usuarios']);
   }
 
+  crearCuenta() {
+    this.irRegistro();
+  }
+
   recuperarPassword() {
     this.mensaje =
-      'La recuperación de contraseña aún no está disponible';
+      'La recuperación de contraseña todavía no está configurada.';
   }
+
 }
