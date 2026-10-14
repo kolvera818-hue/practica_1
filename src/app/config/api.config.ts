@@ -1,6 +1,5 @@
 
-export const API_BASE_URL =
-  'http://DESKTOP-V83PK5A/api_ionic';
+export const API_BASE_URL = 'http://192.168.43.66/api_ionic';
 
 export const API = {
   login: `${API_BASE_URL}/login_usuario.php`,

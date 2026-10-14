@@ -18,6 +18,8 @@ import {
   IonList
 } from '@ionic/angular';
 
+import { API } from '../config/api.config';
+
 @Component({
   selector: 'app-gestion-carreras',
   templateUrl: './gestion-carreras.page.html',
@@ -55,7 +57,7 @@ export class GestionCarrerasPage implements OnInit {
 
   async mostrarAlerta(mensaje: string) {
     const alert = await this.alertController.create({
-      header: 'Atencion',
+      header: 'Atención',
       message: mensaje,
       buttons: ['OK']
     });
@@ -97,7 +99,7 @@ export class GestionCarrerasPage implements OnInit {
 
     // Enviar datos al servidor
     this.http.post(
-      'http://192.168.100.32/api_ionic/guardar_carrera.php',
+      API.guardarCarrera,
       this.carrera,
       {
         responseType: 'text'
