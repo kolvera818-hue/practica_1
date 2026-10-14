@@ -1,6 +1,8 @@
+
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import {
   HttpClient,
   HttpClientModule
@@ -16,6 +18,8 @@ import {
   IonItem,
   IonInput
 } from '@ionic/angular';
+
+import { API } from '../config/api.config';
 
 @Component({
   selector: 'app-registro',
@@ -64,7 +68,7 @@ export class RegistroPage {
     }
 
     this.http.post<any>(
-      'http://DESKTOP-V83PK5A/api_ionic/guardar_alumno.php',
+      API.guardarAlumno,
       this.usuario
     ).subscribe({
 

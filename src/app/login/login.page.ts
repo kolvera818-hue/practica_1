@@ -14,6 +14,8 @@ import {
   IonInput
 } from '@ionic/angular';
 
+import { API } from '../config/api.config';
+
 import { addIcons } from 'ionicons';
 import {
   lockClosedOutline,
@@ -63,8 +65,7 @@ export class LoginPage {
   errorPassword = '';
   mensaje = '';
 
-  private apiUrl =
-    'http://DESKTOP-V83PK5A/api_ionic/login_usuario.php';
+  private apiUrl = API.login;
 
   constructor(
     private http: HttpClient,
@@ -104,7 +105,6 @@ export class LoginPage {
   }
 
   iniciarSesion() {
-
     this.errorUsuario = '';
     this.errorPassword = '';
     this.mensaje = '';
@@ -148,15 +148,13 @@ export class LoginPage {
       }
     ).subscribe({
 
-      next: (respuesta: RespuestaLogin) => {
-
+      next: (respuesta) => {
         this.cargando = false;
 
         if (
           respuesta.status === 'success' &&
           respuesta.usuario
         ) {
-
           const datos = JSON.stringify(
             respuesta.usuario
           );
@@ -184,17 +182,13 @@ export class LoginPage {
       },
 
       error: (error: any) => {
-
         this.cargando = false;
 
-        if (error.status === 401) {
-          this.mensaje =
-            'Correo electrónico o contraseña incorrectos';
-        } else {
-          this.mensaje =
-            error.error?.message ||
-            'Ocurrió un error de conexión. Inténtalo nuevamente';
-        }
+        this.mensaje =
+          error.status === 401
+            ? 'Correo electrónico o contraseña incorrectos'
+            : error.error?.message ||
+              'Ocurrió un error de conexión. Inténtalo nuevamente';
 
         console.error('Error de login:', error);
       }
@@ -214,5 +208,4 @@ export class LoginPage {
     this.mensaje =
       'La recuperación de contraseña todavía no está configurada.';
   }
-
 }

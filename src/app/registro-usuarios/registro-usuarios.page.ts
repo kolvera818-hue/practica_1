@@ -13,6 +13,8 @@ import {
   IonIcon
 } from '@ionic/angular';
 
+import { API } from '../config/api.config';
+
 import { addIcons } from 'ionicons';
 import {
   personOutline,
@@ -56,8 +58,7 @@ export class RegistroUsuariosPage {
   error = '';
   exito = '';
 
-  private apiUrl =
-    'http://DESKTOP-V83PK5A/api_ionic/registrar_usuario.php';
+  private apiUrl = API.registrarUsuario;
 
   constructor(
     private http: HttpClient,
@@ -108,14 +109,20 @@ export class RegistroUsuariosPage {
       return;
     }
 
-    if (this.usuario.password !== this.usuario.confirmarPassword) {
+    if (
+      this.usuario.password !==
+      this.usuario.confirmarPassword
+    ) {
       this.error = 'Las contraseñas no coinciden';
       return;
     }
 
     this.cargando = true;
 
-    this.http.post<any>(this.apiUrl, this.usuario).subscribe({
+    this.http.post<any>(
+      this.apiUrl,
+      this.usuario
+    ).subscribe({
 
       next: (respuesta: any) => {
         this.cargando = false;
@@ -138,12 +145,14 @@ export class RegistroUsuariosPage {
 
         } else {
           this.error =
-            respuesta.message || 'No se pudo crear la cuenta';
+            respuesta.message ||
+            'No se pudo crear la cuenta';
         }
       },
 
       error: (err: any) => {
         this.cargando = false;
+
         console.error('Error del registro:', err);
 
         this.error =

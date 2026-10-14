@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,6 +17,8 @@ import {
   IonButton,
   IonList
 } from '@ionic/angular';
+
+import { API } from '../config/api.config';
 
 @Component({
   selector: 'app-gestion-alumnos',
@@ -59,21 +62,16 @@ export class GestionAlumnosPage implements OnInit {
   ) {}
 
   ngOnInit() {
-
     this.obtenerCarreras();
-
   }
 
-  async mostrarAlerta(
-    mensaje: string
-  ) {
+  async mostrarAlerta(mensaje: string) {
 
-    const alert =
-      await this.alertController.create({
-        header: 'Atencion',
-        message: mensaje,
-        buttons: ['OK']
-      });
+    const alert = await this.alertController.create({
+      header: 'Atención',
+      message: mensaje,
+      buttons: ['OK']
+    });
 
     await alert.present();
   }
@@ -81,7 +79,7 @@ export class GestionAlumnosPage implements OnInit {
   obtenerCarreras() {
 
     this.http.get<any>(
-      'http://DESKTOP-V83PK5A/api_ionic/obtener_carreras.php'
+      API.obtenerCarreras
     ).subscribe({
 
       next: (respuesta) => {
@@ -91,12 +89,9 @@ export class GestionAlumnosPage implements OnInit {
           respuesta
         );
 
-        if (
-          respuesta.status === 'success'
-        ) {
+        if (respuesta.status === 'success') {
 
-          this.listaCarreras =
-            respuesta.carreras;
+          this.listaCarreras = respuesta.carreras;
 
         } else {
 
@@ -124,9 +119,7 @@ export class GestionAlumnosPage implements OnInit {
 
   validarGuardar() {
 
-    if (
-      this.alumnos.n_control.trim() === ''
-    ) {
+    if (this.alumnos.n_control.trim() === '') {
 
       this.mostrarAlerta(
         'La matrícula no puede estar vacía'
@@ -135,9 +128,7 @@ export class GestionAlumnosPage implements OnInit {
       return;
     }
 
-    if (
-      this.alumnos.nombre.trim() === ''
-    ) {
+    if (this.alumnos.nombre.trim() === '') {
 
       this.mostrarAlerta(
         'El nombre no puede estar vacío'
@@ -146,9 +137,7 @@ export class GestionAlumnosPage implements OnInit {
       return;
     }
 
-    if (
-      this.alumnos.apat.trim() === ''
-    ) {
+    if (this.alumnos.apat.trim() === '') {
 
       this.mostrarAlerta(
         'El apellido paterno no puede estar vacío'
@@ -157,9 +146,7 @@ export class GestionAlumnosPage implements OnInit {
       return;
     }
 
-    if (
-      this.alumnos.amat.trim() === ''
-    ) {
+    if (this.alumnos.amat.trim() === '') {
 
       this.mostrarAlerta(
         'El apellido materno no puede estar vacío'
@@ -168,9 +155,7 @@ export class GestionAlumnosPage implements OnInit {
       return;
     }
 
-    if (
-      this.alumnos.fecha_nac === ''
-    ) {
+    if (this.alumnos.fecha_nac === '') {
 
       this.mostrarAlerta(
         'La fecha de nacimiento no puede estar vacía'
@@ -179,14 +164,11 @@ export class GestionAlumnosPage implements OnInit {
       return;
     }
 
-    const nacimiento =
-      new Date(
-        this.alumnos.fecha_nac +
-        'T00:00:00'
-      );
+    const nacimiento = new Date(
+      this.alumnos.fecha_nac + 'T00:00:00'
+    );
 
-    const hoy =
-      new Date();
+    const hoy = new Date();
 
     let edad =
       hoy.getFullYear() -
@@ -200,11 +182,9 @@ export class GestionAlumnosPage implements OnInit {
       mes < 0 ||
       (
         mes === 0 &&
-        hoy.getDate() <
-        nacimiento.getDate()
+        hoy.getDate() < nacimiento.getDate()
       )
     ) {
-
       edad--;
     }
 
@@ -226,9 +206,7 @@ export class GestionAlumnosPage implements OnInit {
       return;
     }
 
-    if (
-      this.alumnos.genero === ''
-    ) {
+    if (this.alumnos.genero === '') {
 
       this.mostrarAlerta(
         'Selecciona un género'
@@ -255,7 +233,7 @@ export class GestionAlumnosPage implements OnInit {
   guardarAlumno() {
 
     this.http.post<any>(
-      'http://DESKTOP-V83PK5A/api_ionic/guardar_estudiante.php',
+      API.guardarEstudiante,
       this.alumnos
     ).subscribe({
 
@@ -266,9 +244,7 @@ export class GestionAlumnosPage implements OnInit {
           respuesta
         );
 
-        if (
-          respuesta.status === 'success'
-        ) {
+        if (respuesta.status === 'success') {
 
           this.mostrarAlerta(
             respuesta.message ||
@@ -293,9 +269,7 @@ export class GestionAlumnosPage implements OnInit {
           error
         );
 
-        if (
-          error.error?.message
-        ) {
+        if (error.error?.message) {
 
           this.mostrarAlerta(
             error.error.message
